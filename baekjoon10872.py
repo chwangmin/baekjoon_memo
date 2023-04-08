@@ -2,12 +2,10 @@ import sys
 
 num = int(sys.stdin.readline())
 
-x = 1
 def factorial(num):
+    x = 1
     if num > 1:
-        global x
-        x *= num    
-        factorial(num-1)
+        x = num * factorial(num-1)
     return x
 
 if num < 2:
