@@ -1,4 +1,4 @@
-import sys
+import sys, time
 
 num = int(sys.stdin.readline())
 
@@ -22,5 +22,7 @@ def possible(n):
             return False
     return True
 
+start = time.time()
 n_queen(0)
 print(count)
+print(time.time()-start)
