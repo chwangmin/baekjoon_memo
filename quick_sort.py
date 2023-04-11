@@ -1,3 +1,5 @@
+import sys, time
+
 def quick_sort(arr):
     if len(arr) <= 1:
         return arr
@@ -12,4 +14,11 @@ def quick_sort(arr):
             equal_arr.append(num)
     return quick_sort(lesser_arr) + equal_arr + quick_sort(greater_arr)
 
-print(quick_sort([1,5,2,3,4,10,7,8,9,6]))
+x = list(map(int,sys.stdin.readline().split()))
+
+start = time.time()
+for i in range(100000):
+    x = quick_sort(x)
+print(time.time()-start)
+
+print(x)
