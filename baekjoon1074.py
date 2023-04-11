@@ -14,10 +14,10 @@ def z_recursive(n,x,y):
         x = x-2**(n-1)
         y = y-2**(n-1)
     elif x > 2 ** (n-1) and y <= 2 ** (n-1):
-        check = 2 ** (2 * (n-1))
+        check = n ** (2 * (n-1))
         x = x-2**(n-1)
     elif x <= 2 ** (n-1) and y > 2 ** (n-1):
-        check = 2 ** (2 * (n-1)) * 2
+        check = n ** (2 * (n-1)) * 2
         y = y-2**(n-1)
     return check + z_recursive(n-1,x,y)
 
