@@ -1,5 +1,5 @@
 import sys
-sys.setrecursionlimit
+sys.setrecursionlimit(100000)
 
 dx = [1,0,-1,0]
 dy = [0,1,0,-1]
@@ -13,7 +13,7 @@ def sink_DFS(x,y,h):
             sink_DFS(nx,ny,h)
 
 N = int(sys.stdin.readline())
-water_board = [list(map(int, sys.stdin.readline().split()))]
+water_board = [list(map(int, sys.stdin.readline().split()))for _ in range(N)]
 
 ans = 1
 
@@ -24,9 +24,13 @@ for k in range(max(map(max, water_board))):
         for j in range(N):
             if water_board[i][j] > k and not sink_table[i][j]:
                 count+=1
-                sink_table[i][j] == True
+                sink_table[i][j] = True
                 sink_DFS(i,j,k)
+    print(k)
+    for i in range(N):
+        for j in range(N):
+            print('□' if sink_table[i][j] else '■', end='')
+        print()
     ans = max(ans, count)
 
 print(ans)
-            
