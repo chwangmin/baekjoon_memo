@@ -2,30 +2,29 @@ import sys
 
 num = int(sys.stdin.readline())
 
-x = list(map(int,sys.stdin.readline().split()))
+a = list(map(int,sys.stdin.readline().split()))
 
 all = []
 
 def bf(arr,cur):
-    global count
     if arr:
         for i in range(num-len(cur)):
             tmp = list(cur)
             tmp.append(arr[i])
-            new_arr = list(arr[:i] + arr[i+1:])
+            new_arr = arr[:i] + arr[i+1:]
             bf(new_arr,tmp)
     else:
         all.append(cur)
 
-max = 0
+bf(a, [])
 
-bf(x,[])
+check = 0
 
-for i in all:
+for i_list in all:
     tmp = 0
-    for j in range(num-1):
-        tmp += abs(i[j] - i[j+1])
-    if max < tmp:
-        max = tmp
+    for i in range(num-1):
+        tmp += abs(i_list[i] - i_list[i+1])
+    if check < tmp:
+        check = tmp
 
-print(max)
+print(check)
