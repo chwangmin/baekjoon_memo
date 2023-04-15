@@ -1,29 +1,38 @@
-import sys
+N = int(input())
+N_li = list(map(int, input().split()))
+M = int(input())
+M_li = list(map(int,input().split()))
 
-num1 = int(sys.stdin.readline())
+N_li.sort()
 
-a = list(map(int,sys.stdin.readline().split()))
+def binary_search(array, target, start, end):
+    if start > end:
+        return 0
+    
+    mid = (start+end) // 2
 
-num2 = int(sys.stdin.readline())
-
-b = list(map(int,sys.stdin.readline().split()))
-
-a.sort()
-
-def binary_search(x, left, right):
-    mid = (left + right) // 2 - 1
-    if x == a[mid]:
-        return True
-    if left < right:
-        if x > a[mid]:
-            binary_search(x,mid+1,right)
-        else:
-            binary_search(x,left,mid-1)
+    if array[mid] == target:
+        return 1
+    if array[mid] > target:
+        return binary_search(array,target,start,mid-1)
+    if array[mid] < target:
+        return binary_search(array, target, mid+1, end)
+    
+for i in M_li:
+    print(binary_search(N_li, i, 0, N-1))
 
 
+def binary_search2(array,target,start,end):
+    while start <= end:
+        mid = (start + end) // 2
 
-for i in b:
-    if binary_search(i,0,num1):
-        print(1)
-    else:
-        print(0)
+        if array[mid] == target:
+            return 1
+        elif array[mid] > target:
+            end = mid - 1
+        elif array[mid] < target:
+            start = mid + 1
+    return 0
+
+for i in M_li:
+    print(binary_search(N_li,i,0,N-1))

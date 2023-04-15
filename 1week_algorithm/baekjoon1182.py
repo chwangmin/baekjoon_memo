@@ -1,23 +1,19 @@
 import sys
 
-def back_tracking(idx, res):
-    global cnt
+N,S=map(int, sys.stdin.readline().split())
+sequence=list(map(int, sys.stdin.readline().split()))
 
-    if idx >= n:
+answer=0
+def BFS(depth, number):
+    global answer
+    if depth==N:
+        if number==S:
+            answer+=1
         return
+
+    BFS(depth+1, number)
+    BFS(depth+1, number+sequence[depth])
     
-    res += k[idx]
-
-    if res == s:
-        cnt+=1
-
-    back_tracking(idx + 1, res)
-    back_tracking(idx + 1, res - k[idx])
-
-
-n, s = map(int, sys.stdin.readline().split())
-k = list(map(int, sys.stdin.readline().split()))
-cnt = 0
-
-back_tracking(0,0)
-print(cnt)
+BFS(0,0)
+if S==0 : answer-=1
+print(answer)
