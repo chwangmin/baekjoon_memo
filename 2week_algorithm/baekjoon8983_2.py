@@ -30,8 +30,6 @@ for i in range(N):
 
     near_x_index = binary_search(x)
 
-    print(near_x_index)
-
     dist = abs(x-M_list[near_x_index]) + y
     dist_right = abs(M_list[near_x_index+1]-x) + y if near_x_index < M-1 else float('inf')
     
@@ -40,5 +38,4 @@ for i in range(N):
     if check <= L:
         count +=1
     
-    print(count)
 print(count)
