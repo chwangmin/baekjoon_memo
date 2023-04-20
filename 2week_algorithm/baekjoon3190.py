@@ -71,37 +71,25 @@ start = 1
 breaker = False
 
 # 뱀의 방향 정보를 입력받아
-for i in range(len(change_snake)): 
-  # 게임 시작
+for i in range(len(change_snake)):
   start = cnt + 1
   for _ in range(start, change_snake[i][0]+ 1):
-    # 이동할 좌표 설정
     nx = x + change[turn_index][0]
     ny = y + change[turn_index][1]
-    # 이동할 좌표가 벽 또는 자기자신의 몸과 부딪힌다면 반복문 종료
     if nx < 0 or nx >= n or ny < 0 or ny >= n or (nx, ny) in snake:
       cnt += 1
       breaker = True
       break
-    # 뱀이 이동할 다음 위치에 사과가 있다면
     if board[nx][ny] == 1:
-    # 사과 먹기
       board[nx][ny] = 0
       x, y = nx, ny
-      # 뱀의 위치 표시
       snake.append((x, y))
-    # 다음 위치에 사과가 없다면
     else:
       x, y = nx, ny
-      # 뱀의 위치 표시
       snake.popleft()
       snake.append((x, y))
-    # 게임 1초씩 증가
     cnt += 1
   if breaker == True:
     break
-  # 뱀 이동후 방향 전환
   turn_snake(change_snake[i][1])  
-
-# 정답 출력
 print(cnt)

@@ -21,13 +21,10 @@ count = 0
 if len(heap) == 1:
     print(0)
 else:
-    for i in range(N):
-        count +=1
-        if count > 2:
-            x = answer
-            answer += x
-            count = 1
-        answer += heapq.heappop(heap)
+    while len(heap) > 1:
+        plus = heapq.heappop(heap) + heapq.heappop(heap)
+        answer += plus
+        heapq.heappush(heap,plus)
 
     print(answer)
 

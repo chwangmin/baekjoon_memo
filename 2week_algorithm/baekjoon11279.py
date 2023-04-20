@@ -1,5 +1,4 @@
 from math import *
-import sys
 
 # insert
 def insert(heap, num):
@@ -40,12 +39,12 @@ def remove(heap):
     return maxVal
 
 # main
-n = int(sys.stdin.readline())
+n = int(input())
 
 heap = [0]
 
 for _ in range(n):
-    num = int(sys.stdin.readline())
+    num = int(input())
 
     if num == 0:
         if len(heap) == 1:
