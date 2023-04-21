@@ -13,7 +13,7 @@ for _ in range(num):
 answer = 0
 
 if num == 1:
-    print(heap[0])
+    print(0)
 else:
     for _ in range(num):
         x = heapq.heappop(heap)

@@ -27,10 +27,7 @@ stack = []
 
 answer = 0
 
-print(list_line)
-
 for i in range(len(list_line)):
-    print(stack)
     if not stack:
         heapq.heappush(stack,list_line[i][0])
     else:
