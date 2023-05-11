@@ -1,21 +1,25 @@
-import sys
-
-input = sys.stdin.readline
-
-num_con, num_ele = map(int,input().split())
-
-list_tmp = [0] * (num_ele + 1)
-
-list_num = list(map(int,input().split()))
-
-for i in list_num:
-    list_tmp[i] += 1
-
-list_tmp.sort(reverse=True)
-
-answer = 0
-
-for i in range(num_con, num_ele+1):
-    answer += list_tmp[i]
-
-print(answer)
+from sys import stdin
+N, K = stdin.readline().split()
+N = int(N)
+K = int(K)
+multap = [0] * N
+li = list(map(int, stdin.readline().split()))
+res = swap = num = max_I = 0
+for i in li:
+    if i in multap:
+        pass
+    elif 0 in multap:
+        multap[multap.index(0)] = i
+    else:
+        for j in multap:
+            if j not in li[num:]:
+                swap = j
+                break
+            elif li[num:].index(j) > max_I:
+                max_I = li[num:].index(j)
+                swap = j
+        multap[multap.index(swap)] = i
+        max_I = swap = 0
+        res += 1
+    num += 1
+print(res)
