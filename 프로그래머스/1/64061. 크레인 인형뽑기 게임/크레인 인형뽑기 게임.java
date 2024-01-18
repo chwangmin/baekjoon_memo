@@ -3,7 +3,7 @@ class Solution {
         int answer = 0;    
         int boardSize= board[0].length; // 5
         
-        int []boardBlockArr = new int[901];
+        int []boardBlockArr = new int[900];
         
         for (int move : moves){
             int tmpBoardBlock = 0;
@@ -16,7 +16,7 @@ class Solution {
                 }
             }
             if (tmpBoardBlock != 0){
-                for (int i = 0; i < 901; i++){
+                for (int i = 0; i < 900; i++){
                     if (boardBlockArr[i] == 0){
                         boardBlockArr[i] = tmpBoardBlock;
                         if (i > 0){
