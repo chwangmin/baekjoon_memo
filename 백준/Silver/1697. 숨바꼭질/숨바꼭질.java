@@ -42,7 +42,6 @@ public class Main {
 
 			for (int i = 0; i < size; i++) {
 				int tmpSubinX = q.poll();
-                visited[tmpSubinX] = true;
 				if (tmpSubinX + 1 == broX || tmpSubinX - 1 == broX || tmpSubinX * 2 == broX) {
 					return count;
 				}
