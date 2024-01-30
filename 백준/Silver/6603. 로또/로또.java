@@ -9,7 +9,6 @@ public class Main {
 	static int[] nums;
 	static int[] answer;
 	static StringBuilder sb = new StringBuilder();
-	static boolean[] isSelected;
 
 	static void inputData(StringTokenizer st) {
 		int numsIndex = 0;
@@ -46,7 +45,6 @@ public class Main {
 
 			nums = new int[numsLength];
 			answer = new int[numsLength];
-			isSelected = new boolean[numsLength];
 
 			inputData(st);
 
