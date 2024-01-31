@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -8,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	
 	static int boardSize, numCnt;
 	static int[][] board, sumBoard;
 	static StringTokenizer st;
@@ -73,8 +72,6 @@ public class Main {
 			
 			sb.append(answer).append("\n");
 		}
-		bw.write(sb.toString());
-		bw.flush();
-		bw.close();
+		System.out.println(sb);
 	}
 }
