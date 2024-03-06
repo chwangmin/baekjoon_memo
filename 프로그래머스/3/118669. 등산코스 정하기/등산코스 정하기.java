@@ -9,15 +9,11 @@ class Solution {
         }
     }
     
-    class EndWeight implements Comparable<EndWeight>{
+    class EndWeight{
         int e, w;
         EndWeight(int e, int w){
             this.e = e;
             this.w = w;
-        }
-        @Override
-        public int compareTo(EndWeight o){
-            return Integer.compare(o.w, this.w);
         }
     }
     
@@ -38,7 +34,7 @@ class Solution {
         for(int i = 0 ; i < gates.length; i++){
             int[] visited = new int[n+1];
             Arrays.fill(visited, Integer.MAX_VALUE);
-            PriorityQueue<EndWeight> pq = new PriorityQueue<>();
+            Deque<EndWeight> pq = new ArrayDeque<>();
             pq.add(new EndWeight(gates[i],0));
             visited[gates[i]] = 0;
             boolean flag = false;
