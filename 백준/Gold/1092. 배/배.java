@@ -1,75 +1,83 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map.Entry;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-
+import java.util.*;
+ 
+ 
 public class Main {
-
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    static StringTokenizer st;
-
-    static int N, M;
-    static Integer[] crains;
-    static TreeMap<Integer, Integer> boxes;
-
-    public static void main(String[] args) throws Exception {
-        N = Integer.parseInt(br.readLine());
-
-        crains = new Integer[N];
-        st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < N; i++) {
-            crains[i] = Integer.parseInt(st.nextToken());
-        }
-        // 크레인이 실을 수 있는 화물 무게가 큰 순으로 정렬
-        Arrays.sort(crains, Collections.reverseOrder());
-
-        M = Integer.parseInt(br.readLine());
-        boxes = new TreeMap<>(); // 이분탐색을 위해 TreeMap 사용
-        st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < M; i++) {
-            int m = Integer.parseInt(st.nextToken());
-            Integer cnt;
-            if((cnt = boxes.get(m)) == null){
-                boxes.put(m, 1);
-                continue;
-            }
-            boxes.replace(m, cnt+1);
-        }
-
-        int time = 0;
-        // 처리하지 못하는 화물이 있는 경우 -1 처리
-        if(boxes.higherEntry(crains[0]) != null) {
-            time = -1;
-        }
-
-        Loop1 : while(time != -1 && !boxes.isEmpty()) {
-            time++; // 시간 증가
-            //System.out.println(time+"?");
-            for(int n = 0; n < N; n++) {
-                // crains[n]을 포함해 가장 가까운 최댓값 구하기
-                Entry<Integer, Integer> box = boxes.floorEntry(crains[n]);
-                if(box == null) break; // 없으면 crains 0 부터 시작
-
-                if(box.getValue() == 1) { // 마지막이면 삭제
-                    boxes.remove(box.getKey());
-                    continue;
-                }
-
-                // 아니면 갯수 1 감소
-                boxes.replace(box.getKey(), box.getValue()-1);
-                if(boxes.isEmpty()) break Loop1;
-            }
-        }
-
-        bw.write(Integer.toString(time));
-        bw.flush();
-        bw.close();
+	
+	public static int N,M;
+	public static Integer[] crain, box;
+	public static int answer =0 ;
+	public static boolean[] visited;
+	public static int[] crain_positions;
+    public static void main(String[] args) throws IOException{
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	
+    	StringTokenizer st = new StringTokenizer(br.readLine());
+    	N = Integer.parseInt(st.nextToken());
+    	crain = new Integer[N];
+    	
+    	st = new StringTokenizer(br.readLine());
+    	for(int i=0;i<N;i++) {
+    		crain[i] = Integer.parseInt(st.nextToken());
+    	}
+ 
+    	st = new StringTokenizer(br.readLine());
+    	M = Integer.parseInt(st.nextToken());
+    	box = new Integer[M];
+    	
+    	st = new StringTokenizer(br.readLine());
+    	for(int i=0;i<M;i++) {
+    		box[i] = Integer.parseInt(st.nextToken());
+    	}
+    	
+    	//내림차순으로 정렬하여야, 큰것들부터 처리합니다. (큰 크레인이 작은것들을 처리하는 일이 없어야만 합니다.)
+    	Arrays.sort(crain, Collections.reverseOrder());
+    	Arrays.sort(box, Collections.reverseOrder());
+    	
+    	
+    	if(crain[0] < box[0]) {
+    		System.out.println("-1"); 
+    		return;
+    	}
+ 
+    	crain_positions = new int[N];
+    	visited = new boolean[M];
+    	//박스를 모두 옮기기전까지 작동
+    	while(M > 0) {
+    		
+    		//각 크레인이 순회
+    		for(int i=0;i<N;i++) {
+    			if(M == 0) break;
+    			
+    			for(int j=crain_positions[i];j<box.length;j++) {
+    				if(visited[j] == true) continue; 
+    				if(crain[i] < box[j]) {
+    					crain_positions[i]++;
+    					continue;
+    				}
+    				else if(crain[i] >= box[j]) {
+    					visited[j] = true;
+    					M--;
+    					break;
+    				}
+    			}
+    			
+//                비효율적인 코드
+//    			for(int j=0;j<box.length;j++) {
+//    				if(visited[j] == true) continue; 
+//    				if(crain[i] >= box[j]) {
+//    					visited[j] = true;
+//    					M--;
+//    					break;
+//    				}
+//    			}
+    			
+    		}
+    		answer++;
+    	}
+    	System.out.println(answer);
+    	
     }
-
 }
