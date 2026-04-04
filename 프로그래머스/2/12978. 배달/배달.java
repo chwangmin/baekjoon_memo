@@ -1,77 +1,57 @@
 import java.util.*;
 
 class Solution {
-    public static class Node{
-        ArrayList<WeightEnd> endNode;
-        Node(){
-            endNode = new ArrayList<>();
-        }
-    }
-    
-    public static class WeightEnd implements Comparable<WeightEnd> {
-        int w;
-        int e;
-        WeightEnd(int w, int e){
-            this.w = w;
-            this.e = e;
-        }
-        @Override
-        public int compareTo(WeightEnd o){
-            return Integer.compare(this.w, o.w);
-        }
-    }
-    
     public int solution(int N, int[][] road, int K) {
         int answer = 0;
+        boolean[] visited = new boolean[N + 1];
+        int[] dist = new int[N+1];
         
-        Node[] nodes = new Node[N+1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[1] = 0;
         
-        boolean[] visited = new boolean[N+1];
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
         
-        for (int i = 1 ; i < N+1; i++){
-            nodes[i] = new Node();
+        ArrayList<ArrayList<int[]>> arr = new ArrayList<>();
+        
+        for (int i = 0; i <= N; i ++){
+            arr.add(new ArrayList<>());
         }
         
-        for (int i = 0 ; i < road.length; i++){
-            nodes[road[i][0]].endNode.add(new WeightEnd(road[i][2],road[i][1]));
-            nodes[road[i][1]].endNode.add(new WeightEnd(road[i][2],road[i][0]));
+        for (int i = 0; i < road.length; i++){
+            arr.get(road[i][0]).add(new int[]{road[i][1], road[i][2]});
+            arr.get(road[i][1]).add(new int[]{road[i][0], road[i][2]});
         }
         
-        Queue<WeightEnd> q = new PriorityQueue<>();
+        // 첫번째가 현재 가중치, 두번째가 현재 노드
+        pq.add(new int[]{0,1});
         
-        q.add(new WeightEnd(0, 1));
-        
-        while(!q.isEmpty()){
-            WeightEnd we = q.poll();
+        while(!pq.isEmpty()){
+            int[] cur = pq.poll();
             
-            int currentWeight = we.w;
-            int currentNode = we.e;
+            if (visited[cur[1]]) continue;
             
-            if (visited[currentNode]){
-                continue;
-            }
+            visited[cur[1]] = true;
             
-            visited[currentNode] = true;
-            
-            answer++;
-            
-            for (int i = 0 ; i < nodes[currentNode].endNode.size(); i++){
-                int nextWeight = nodes[currentNode].endNode.get(i).w;
-                int nextNode = nodes[currentNode].endNode.get(i).e;
-                int sumWeight = currentWeight + nextWeight;
+            for (int[] next : arr.get(cur[1])){
+                int nextNode = next[0];
+                int nextWeight = next[1];
                 
-                if (sumWeight > K){
-                    continue;
+                int curWeight = cur[0] + nextWeight;
+                if (dist[nextNode] > curWeight){
+                    dist[nextNode] = curWeight;
+                    pq.add(new int[]{curWeight, nextNode});
                 }
-                
-                q.add(new WeightEnd(sumWeight,nextNode));
             }
         }
+        
+        for (int distWeight: dist){
+            if (distWeight <= K){
+                answer++;
+            }
+        }
+        
+        
 
         return answer;
     }
-    //양방향
-//K시간 이하로 배달이 가능한 마을
-//마을의 개수 ㅜ, 도로의 정보 road, 배달 가능한 시간 K
-//음식 주문을 받을 수 있는 마을의 개수12
 }
